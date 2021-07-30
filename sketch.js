@@ -1,7 +1,7 @@
 var paddle, balls;
 var ball, score;
 var invisGround;
-var gameState = 1;
+var gameState = "serve";
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
@@ -16,28 +16,38 @@ function setup() {
 function draw() {
   background('black')
   paddle.x = mouseX
-  if (gameState === 1) {
+
+  if (gameState == "serve") {
+    textSize(100)
+    fill(255)
+    text("Press space to start" , windowWidth/4 , windowHeight / 2);
+
+    paddle.visible=false;
+
+    if(keyDown == 32){
+      gameState = "play";
+    }else{
+      gameState = "serve";
+    }
+   
+   }
+
+  if(gameState == "play"){
+    paddle.visible = true
   textSize(25)
   fill(255)
   text("Score:" + score, width - 200, 100);
 
-    createBall()
+  createBall()
 
-    if (balls.bounceOff(paddle)) {
-      score = score + 5
-    } 
-      
-  }
-  
-
-  if (gameState === 2){
-    gameOver()
+  if (balls.bounceOff(paddle)) {
+    score = score + 5
   }
 
-
-
-  drawSprites()
 }
+
+   drawSprites()
+ }
 
 function createBall() {
   if (frameCount % 100 === 0) {
@@ -48,8 +58,8 @@ function createBall() {
   }
 }
 
-function gameOver() {
-  textSize(100)
-  fill(255)
-  text("Your Score:" + score, windowWidth/2 , windowHeight/2)
-}
+// function gameOver() {
+//   textSize(100)
+//   fill(255)
+//   text("Your Score:" + score, windowWidth / 2, windowHeight / 2)
+// }
