@@ -20,34 +20,41 @@ function draw() {
   if (gameState == "serve") {
     textSize(100)
     fill(255)
-    text("Press space to start" , windowWidth/4 , windowHeight / 2);
+    text("Press space to start", windowWidth / 4, windowHeight / 2);
 
-    paddle.visible=false;
+    paddle.visible = false;
+    balls.visible = false;
 
-    if(keyDown == 32){
-      gameState = "play";
-    }else{
-      gameState = "serve";
-    }
-   
-   }
+  }
 
-  if(gameState == "play"){
-    paddle.visible = true
+  if (keyDown("space") && gameState === 'serve') {
+    gameState = 'play';
+    paddle.visible = true;
+    balls.visible = true;
+
+
+  }
+
+  if (balls.collide(invisGround) && gameState === 'play') {
+    gameState = 'end';
+    textSize(100)
+    fill(255)
+    text("Your Score:" + score, windowWidth / 4, windowHeight / 2)
+    createBall.destroyEach();
+  }
+
   textSize(25)
   fill(255)
   text("Score:" + score, width - 200, 100);
 
-  createBall()
-
   if (balls.bounceOff(paddle)) {
     score = score + 5
   }
+  createBall()
+  balls.bounceOff(paddle)
 
+  drawSprites()
 }
-
-   drawSprites()
- }
 
 function createBall() {
   if (frameCount % 100 === 0) {
@@ -58,8 +65,8 @@ function createBall() {
   }
 }
 
-// function gameOver() {
-//   textSize(100)
-//   fill(255)
-//   text("Your Score:" + score, windowWidth / 2, windowHeight / 2)
-// }
+function gameOver() {
+  textSize(100)
+  fill(255)
+  text("Your Score:" + score, windowWidth / 2, windowHeight / 2)
+}
