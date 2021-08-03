@@ -37,14 +37,7 @@ function draw() {
 
   }
 
-  if (balls.collide(invisGround) && gameState === 'play') {
-    gameState = 'end';
-    textSize(100)
-    fill(255)
-    text("Your Score:" + score, windowWidth / 4, windowHeight / 2)
-    createBall.destroyEach();
-    createBomb.destroyEach();
-  }else if (bombs.collide(paddle) && gameState === 'play') {
+  if (balls.collide(invisGround) && gameState === 'play' || bombs.collide(paddle)) {
     gameState = 'end';
     textSize(100)
     fill(255)
@@ -52,6 +45,7 @@ function draw() {
     createBall.destroyEach();
     createBomb.destroyEach();
   }
+
 
   textSize(25)
   fill(255)
@@ -81,7 +75,7 @@ function createBomb() {
     bomb = createSprite(random(50, width - 50), 0, 50, 50);
     bomb.velocityY = 5 + score / 10;
     bomb.shapeColor = "red";
-    bombs.add(bombs);
+    bombs.add(bomb);
   }
 }
 
