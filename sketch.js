@@ -3,15 +3,27 @@ var ball, score;
 var invisGround;
 var gameState = "serve";
 var bomb, bombs;
+var bombIMG , basketIMG , ballIMG;
+
+
+function preload(){
+  bombIMG = loadImage('./Bomb_image.png');
+  basketIMG = loadImage('./Basket_image.png');
+  ballIMG = loadImage('./ball_image.png')
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
   paddle = createSprite(width / 2, height - 100, 200, 20);
+  paddle.addImage(basketIMG);
+  paddle.scale = 0.75
   invisGround = createSprite(windowWidth / 2, windowHeight - 10, windowWidth, 10);
   invisGround.visible = false
   score = 0
   balls = new Group()
   bombs = new Group()
+  
+  
 
 }
 
@@ -64,6 +76,7 @@ function draw() {
 function createBall() {
   if (frameCount % 100 === 0) {
     ball = createSprite(random(50, width - 50), 0, 20, 20);
+    ball.addImage(ballIMG);
     ball.velocityY = 5 + score / 10;
     ball.shapeColor = rgb(random(0, 255), random(0, 255), random(0, 255));
     balls.add(ball);
@@ -72,7 +85,9 @@ function createBall() {
 
 function createBomb() {
   if (frameCount % 150 === 0) {
-    bomb = createSprite(random(50, width - 50), 0, 50, 50);
+    bomb = createSprite(random(50, width - 50), 0, 40, 40);
+    bomb.addImage(bombIMG);
+    bomb.scale = 0.75
     bomb.velocityY = 5 + score / 10;
     bomb.shapeColor = "red";
     bombs.add(bomb);
