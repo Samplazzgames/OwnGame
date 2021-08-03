@@ -77,6 +77,7 @@ function createBall() {
   if (frameCount % 100 === 0) {
     ball = createSprite(random(50, width - 50), 0, 20, 20);
     ball.addImage(ballIMG);
+    ball.scale = 0.20
     ball.velocityY = 5 + score / 10;
     ball.shapeColor = rgb(random(0, 255), random(0, 255), random(0, 255));
     balls.add(ball);
