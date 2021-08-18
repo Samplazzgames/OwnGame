@@ -4,12 +4,15 @@ var invisGround;
 var gameState = "serve";
 var bomb, bombs;
 var bombIMG , basketIMG , ballIMG;
+var bombSOUND , ballSOUND;
 
 
 function preload(){
   bombIMG = loadImage('./Bomb_image.png');
   basketIMG = loadImage('./Basket_image.png');
   ballIMG = loadImage('./ball_image.png')
+  bombSOUND = loadSound('./EXPLOSION.ogg');
+  ballSOUND = loadSound('./Collecting.ogg');
 }
 
 function setup() {
@@ -53,7 +56,8 @@ function draw() {
     gameState = 'end';
     textSize(100)
     fill(255)
-    text("Your Score:" + score, windowWidth / 4, windowHeight / 2)
+    text("Your Score:" + score, windowWidth / 4, windowHeight / 2);
+    bombSOUND.play()
     createBall.destroyEach();
     createBomb.destroyEach();
   }
@@ -65,10 +69,13 @@ function draw() {
 
   if (balls.bounceOff(paddle)) {
     score = score + 5
+    ballSOUND.play()
   }
   createBall()
   createBomb()
+
   balls.bounceOff(paddle)
+  
 
   drawSprites()
 }
